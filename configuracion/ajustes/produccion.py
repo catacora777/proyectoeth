@@ -1,4 +1,5 @@
 from .base import *
+from decouple import config
 
 DEBUG = False
 ALLOWED_HOSTS = ['.vercel.app']
@@ -11,14 +12,8 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT'),
+        'OPTIONS': {'sslmode': 'require'},
     }
 }
 
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+STATIC_ROOT = BASE_DIR / 'staticfiles'
