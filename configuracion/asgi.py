@@ -16,7 +16,7 @@ def seleccionar_settings():
     modulo = os.environ.get('DJANGO_SETTINGS_MODULE')
     if modulo:
         return modulo
-    if os.environ.get('VERCEL'):
+    if os.environ.get('RENDER') or os.environ.get('VERCEL'):
         return 'configuracion.ajustes.produccion'
     return 'configuracion.ajustes.desarrollo'
 

@@ -170,18 +170,25 @@ python manage.py shell                           # Consola interactiva
 | 7 | pagos | Stripe Checkout, donaciones | ⬜ Pendiente |
 | 8 | comunidad | Membresías, eventos, campañas | ⬜ Pendiente |
 | 9 | lista_negra | Infractores y advertencias | ⬜ Pendiente |
-| 10 | Pruebas y deploy | Tests + despliegue Vercel + Neon BD | ⬜ Pendiente |
+| 10 | Pruebas y deploy | Tests + despliegue Render + Neon BD | ⬜ Pendiente |
 
-## Despliegue (Vercel + Neon BD)
+## Despliegue (Render + Neon BD)
 
-- **Hosting**: Vercel (solo funciones serverless) + **Neon BD** (PostgreSQL gratuito).
-- El archivo `requirements.txt` de la raíz es autocontenido y congelado para que Vercel ejecute `pip install -r requirements.txt`.
-- **Limitaciones conocidas de Vercel** que requieren alternativas al finalizar:
-  - Chat tiempo real (Django Channels/WebSockets) → NO soportado; alternativa: Firebase Realtime Database o TalkJS.
+- **Hosting**: Render (Web Service Python) + **Neon BD** (PostgreSQL gratuito).
+- El archivo `requirements.txt` de la raíz es autocontenido y congelado para que Render ejecute `pip install -r requirements.txt`.
+- **build.sh** (se ejecuta en cada deploy): `pip install` → `collectstatic --noinput` → `migrate` (aplica las migraciones a Neon automáticamente).
+- **`.python-version`**: fija `3.14.6` para que Render use la misma versión que el entorno local.
+- **Comandos en el dashboard de Render**:
+  - Build Command: `bash ./build.sh`
+  - Start Command: `gunicorn configuracion.wsgi:application --bind 0.0.0.0:$PORT`
+- **Variables de entorno** (dashboard de Render): `DJANGO_SETTINGS_MODULE=configuracion.ajustes.produccion`, `DEBUG=False`, `SECRET_KEY`, `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_PORT`.
+- **Limitaciones conocidas de Render** que requieren alternativas al finalizar:
+  - Chat tiempo real (Django Channels/WebSockets) → NO soportado en plan free; alternativa: Firebase Realtime Database o TalkJS.
   - Tareas programadas (Celery/Redis) → NO soportado; alternativa: cron-job.org llamando endpoints.
-  - Subida de fotos/contratos (media local) → Alternativa: Cloudinary o Supabase Storage.
-  - Almacenamiento persistente de archivos → usar servicio externo.
-- En producción usar `configuracion.ajustes.produccion` (DEBUG=False, hosts `.vercel.app`).
+  - Subida de fotos/contratos (media local) → el disco es efímero; alternativa: Cloudinary o Supabase Storage.
+  - Plan free: el servicio se apaga tras 15 min de inactividad (primera visita ~50 s); se puede mitigar con cron-job.org.
+- En producción usar `configuracion.ajustes.produccion` (DEBUG=False, hosts `.onrender.com`, CSRF_TRUSTED_ORIGINS `https://*.onrender.com`).
+- La app detecta el entorno de producción si existen las env vars `RENDER` o `VERCEL`.
 
 ## Reglas para agentes (resumen)
 

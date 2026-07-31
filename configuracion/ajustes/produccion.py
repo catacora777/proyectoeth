@@ -2,7 +2,12 @@ from .base import *
 from decouple import config
 
 DEBUG = False
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.onrender.com']
+if config('RENDER_EXTERNAL_HOSTNAME', default=''):
+    ALLOWED_HOSTS.append(config('RENDER_EXTERNAL_HOSTNAME'))
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
 DATABASES = {
     'default': {
