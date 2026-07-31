@@ -4,10 +4,18 @@ import os
 import sys
 
 
+def seleccionar_settings():
+    modulo = os.environ.get('DJANGO_SETTINGS_MODULE')
+    if modulo:
+        return modulo
+    if os.environ.get('VERCEL'):
+        return 'configuracion.ajustes.produccion'
+    return 'configuracion.ajustes.desarrollo'
+
+
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-        os.environ.get('DJANGO_SETTINGS_MODULE', 'configuracion.ajustes.desarrollo'))
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', seleccionar_settings())
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

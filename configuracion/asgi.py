@@ -11,7 +11,16 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-    os.environ.get('DJANGO_SETTINGS_MODULE', 'configuracion.ajustes.desarrollo'))
+
+def seleccionar_settings():
+    modulo = os.environ.get('DJANGO_SETTINGS_MODULE')
+    if modulo:
+        return modulo
+    if os.environ.get('VERCEL'):
+        return 'configuracion.ajustes.produccion'
+    return 'configuracion.ajustes.desarrollo'
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', seleccionar_settings())
 
 application = get_asgi_application()
