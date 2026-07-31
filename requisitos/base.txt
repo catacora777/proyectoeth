@@ -8,3 +8,4 @@ whitenoise>=6.0
 requests>=2.34
 pyjwt>=2.13
 cryptography>=49.0
+Pillow>=12.0

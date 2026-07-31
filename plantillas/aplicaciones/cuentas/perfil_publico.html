@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ perfil.usuario.username }} - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card tarjeta-hueco">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        {% if perfil.foto %}
+                            <img src="{{ perfil.foto.url }}" alt="{{ perfil.usuario.username }}" class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        {% else %}
+                            <i class="bi bi-person-circle display-3 me-3" style="color: #40916c;"></i>
+                        {% endif %}
+                        <div>
+                            <h4 class="mb-0">{{ usuario_visible.get_full_name|default:usuario_visible.username }}</h4>
+                            <span class="badge bg-success">{{ perfil.get_tipo_usuario_display }}</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong><i class="bi bi-geo-alt me-1"></i>Ciudad:</strong> {{ perfil.ciudad|default:'No registrada' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong><i class="bi bi-calendar me-1"></i>Miembro desde:</strong> {{ perfil.fecha_registro|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+
+                    {% if perfil.bio %}
+                        <div class="mt-3">
+                            <strong>Sobre mí:</strong>
+                            <p class="text-muted mt-1">{{ perfil.bio }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% if user.is_authenticated and user != usuario_visible %}
+                        <div class="mt-4">
+                            <a href="#" class="btn btn-verde"><i class="bi bi-chat-dots me-1"></i>Contactar</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
