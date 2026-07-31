@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ mascota.nombre }} - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'pagina_principal:inicio' %}">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'mascotas:listado_mascotas' %}">Mascotas</a></li>
+            <li class="breadcrumb-item active">{{ mascota.nombre }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card tarjeta-hueco">
+                {% if mascota.foto_principal %}
+                    <img src="{{ mascota.foto_principal.url }}" class="card-img-top" alt="{{ mascota.nombre }}">
+                {% else %}
+                    <div class="d-flex justify-content-center align-items-center bg-light p-5">
+                        <i class="bi bi-paw display-1 text-muted"></i>
+                    </div>
+                {% endif %}
+            </div>
+            {% if mascota.fotos.all %}
+                <div class="row g-2 mt-2">
+                    {% for foto in mascota.fotos.all %}
+                        <div class="col-3">
+                            <img src="{{ foto.imagen.url }}" class="img-fluid rounded" alt="{{ mascota.nombre }}" style="height: 90px; object-fit: cover; width: 100%;">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card tarjeta-hueco">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h2 class="mb-1">{{ mascota.nombre }}</h2>
+                        <span class="badge bg-success fs-6">{{ mascota.get_estado_display }}</span>
+                    </div>
+                    <p class="text-muted">{{ mascota.get_especie_display }} {% if mascota.raza %}- {{ mascota.raza }}{% endif %}</p>
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong><i class="bi bi-gender-ambiguous me-1"></i>Sexo:</strong> {{ mascota.get_sexo_display }}</p>
+                            <p><strong><i class="bi bi-calendar me-1"></i>Edad:</strong> {{ mascota.get_edad_display }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong><i class="bi bi-rulers me-1"></i>Tamaño:</strong> {{ mascota.get_tamano_display }}</p>
+                            {% if mascota.color %}<p><strong><i class="bi bi-palette me-1"></i>Color:</strong> {{ mascota.color }}</p>{% endif %}
+                            {% if mascota.ciudad %}<p><strong><i class="bi bi-geo-alt me-1"></i>Ciudad:</strong> {{ mascota.ciudad }}</p>{% endif %}
+                        </div>
+                    </div>
+
+                    <h5 class="mt-3">Historia</h5>
+                    <p class="text-muted">{{ mascota.descripcion|linebreaks }}</p>
+
+                    <div class="d-flex gap-2 mt-4">
+                        {% if user.is_authenticated and user != mascota.usuario and mascota.estado == 'en_adopcion' %}
+                            <a href="{% url 'mascotas:solicitar_adopcion' mascota.id %}" class="btn btn-verde flex-grow-1"><i class="bi bi-heart me-1"></i>Solicitar adopción</a>
+                        {% endif %}
+                        {% if user == mascota.usuario %}
+                            <a href="{% url 'mascotas:editar_mascota' mascota.id %}" class="btn btn-ambar"><i class="bi bi-pencil me-1"></i>Editar</a>
+                            <a href="{% url 'mascotas:eliminar_mascota' mascota.id %}" class="btn btn-outline-danger"><i class="bi bi-trash me-1"></i></a>
+                        {% endif %}
+                    </div>
+
+                    <p class="small text-muted mt-3 mb-0">
+                        Publicado por
+                        <a href="{% url 'cuentas:perfil_publico' mascota.usuario.username %}">{{ mascota.usuario.username }}</a>
+                        el {{ mascota.fecha_registro|date:"d/m/Y" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

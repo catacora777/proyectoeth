@@ -128,6 +128,13 @@ python manage.py shell                           # Consola interactiva
 - **Perfil** (OneToOne → User): `telefono`, `direccion`, `ciudad`, `documento_identidad`, `foto`, `tipo_usuario` (adoptante/rescatista/voluntario/colaborador), `bio`, `fecha_registro`.
 - Señal `post_save` crea automáticamente el `Perfil` al crear un `User`.
 
+### App `mascotas`
+- **Mascota**: `nombre`, `especie` (perro/gato/otro), `raza`, `edad` (cachorro/joven/adulto), `tamano`, `sexo`, `color`, `descripcion`, `ciudad`, `estado` (rescatado/en_adopcion/adoptado), `foto_principal`, `usuario`, `fecha_registro`.
+- **FotoMascota**: `mascota` (FK → Mascota), `imagen`, `orden` (galería).
+- **ReportePerdido**: `nombre`, `especie`, `raza`, `color`, `descripcion`, `foto`, `ultima_ubicacion`, `ciudad`, `latitud`, `longitud` (mapa Leaflet), `fecha_perdida`, `recompensa`, `contacto`, `estado` (perdido/encontrado), `usuario`, `fecha_registro`.
+- **ReporteRescatado**: `especie`, `color`, `descripcion`, `foto`, `ciudad`, `ubicacion`, `fecha_rescate`, `estado` (rescatado/en_hogar), `usuario`, `fecha_registro`.
+- **SolicitudAdopcion**: `usuario` (solicitante), `mascota`, `mensaje`, `experiencia`, `estado` (pendiente/aprobada/rechazada), `fecha_solicitud`. Protege contra solicitudes del dueño o mascotas no disponibles.
+
 ## Rutas existentes
 
 | URL | Vista | Descripción |
@@ -138,6 +145,17 @@ python manage.py shell                           # Consola interactiva
 | `/cuenta/` | `cuentas:mi_perfil` | Mi perfil (requiere login) |
 | `/cuenta/editar/` | `cuentas:editar_perfil` | Editar perfil (requiere login) |
 | `/cuenta/<username>/` | `cuentas:perfil_publico` | Perfil público |
+| `/mascotas/` | `mascotas:listado_mascotas` | Catálogo en adopción con filtros |
+| `/mascotas/perdidos/` | `mascotas:listado_perdidos` | Mapa y lista de perdidos |
+| `/mascotas/rescatados/` | `mascotas:listado_rescatados` | Lista de rescatados |
+| `/mascotas/registrar/` | `mascotas:registrar_mascota` | Registrar mascota (login) |
+| `/mascotas/perdidos/reportar/` | `mascotas:reportar_perdida` | Reportar pérdida con mapa (login) |
+| `/mascotas/rescatados/reportar/` | `mascotas:reportar_rescate` | Reportar rescate (login) |
+| `/mascotas/mis-mascotas/` | `mascotas:mis_mascotas` | Mis mascotas (login) |
+| `/mascotas/<id>/` | `mascotas:detalle_mascota` | Detalle de mascota |
+| `/mascotas/<id>/editar/` | `mascotas:editar_mascota` | Editar mascota (dueño) |
+| `/mascotas/<id>/eliminar/` | `mascotas:eliminar_mascota` | Eliminar mascota (dueño) |
+| `/mascotas/<id>/solicitar-adopcion/` | `mascotas:solicitar_adopcion` | Solicitud formal de adopción (login) |
 
 ## Mapa de fases (roadmap)
 
@@ -145,7 +163,7 @@ python manage.py shell                           # Consola interactiva
 |---|---|---|---|
 | 1 | Configuración | Proyecto, PostgreSQL, Jazzmin, Allauth, estructura | ✅ Completada |
 | 2 | cuentas | Perfil de usuario, edición, perfil público | ✅ Completada |
-| 3 | mascotas | Mascota, FotoMascota, ReportePerdido, ReporteRescatado, SolicitudAdopcion, CRUD, filtros, galería | ⬜ Pendiente |
+| 3 | mascotas | Mascota, FotoMascota, ReportePerdido, ReporteRescatado, SolicitudAdopcion, CRUD, filtros, galería | ✅ Completada |
 | 4 | servicios | Servicio, Cita (veterinaria, peluquería, guardería) | ⬜ Pendiente |
 | 5 | seguimiento | Seguimiento post-adopción, Visita, ListaVerificacion, alertas | ⬜ Pendiente |
 | 6 | chat | Django Channels + Redis (WebSockets) | ⬜ Pendiente |

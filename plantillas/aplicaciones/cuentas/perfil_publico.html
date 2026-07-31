@@ -42,6 +42,30 @@
                     {% endif %}
                 </div>
             </div>
+
+            <h4 class="mt-5 mb-3"><i class="bi bi-paw me-2" style="color: #40916c;"></i>Mascotas en adopción</h4>
+            <div class="row g-4">
+                {% for mascota in mascotas %}
+                    <div class="col-md-6">
+                        <div class="card tarjeta-hueco h-100">
+                            {% if mascota.foto_principal %}
+                                <img src="{{ mascota.foto_principal.url }}" class="card-img-top" alt="{{ mascota.nombre }}" style="height: 180px; object-fit: cover;">
+                            {% else %}
+                                <div class="d-flex justify-content-center align-items-center bg-light" style="height: 180px;">
+                                    <i class="bi bi-paw display-1 text-muted"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title mb-1">{{ mascota.nombre }}</h5>
+                                <p class="text-muted small mb-2">{{ mascota.get_especie_display }} · {{ mascota.get_edad_display }} · {{ mascota.get_tamano_display }}</p>
+                                <a href="{% url 'mascotas:detalle_mascota' mascota.id %}" class="btn btn-verde btn-sm">Ver detalle</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center text-muted">Este usuario aún no tiene mascotas en adopción.</div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

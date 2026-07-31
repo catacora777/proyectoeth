@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block titulo %}Solicitar adopción - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card tarjeta-hueco">
+                <div class="card-body p-4">
+                    <h3 class="mb-3"><i class="bi bi-heart-fill me-2" style="color: #40916c;"></i>Solicitar adopción de {{ mascota.nombre }}</h3>
+                    <p class="text-muted">
+                        Tu solicitud será revisada. La adopción se formaliza con un compromiso firmado en nuestra sede física
+                        y un seguimiento post-adopción para asegurar su bienestar.
+                    </p>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for campo in formulario %}
+                            <div class="mb-3">
+                                <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+                                {{ campo }}
+                                {% for error in campo.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                            </div>
+                        {% endfor %}
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-verde"><i class="bi bi-send me-1"></i>Enviar solicitud</button>
+                            <a href="{% url 'mascotas:detalle_mascota' mascota.id %}" class="btn btn-ambar">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block titulo %}Mascotas en adopción - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="bi bi-heart-fill me-2" style="color: #40916c;"></i>Mascotas en adopción</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'mascotas:registrar_mascota' %}" class="btn btn-verde"><i class="bi bi-plus-circle me-1"></i>Registrar mascota</a>
+        {% endif %}
+    </div>
+
+    <form method="get" class="card tarjeta-hueco p-3 mb-4">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label small mb-1">Buscar</label>
+                {{ filtro.form.q }}
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small mb-1">Especie</label>
+                {{ filtro.form.especie }}
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small mb-1">Edad</label>
+                {{ filtro.form.edad }}
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small mb-1">Tamaño</label>
+                {{ filtro.form.tamano }}
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small mb-1">Ciudad</label>
+                {{ filtro.form.ciudad }}
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-verde w-100"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+    </form>
+
+    {% if filtro.qs %}
+        <div class="row g-4">
+            {% for mascota in filtro.qs %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card tarjeta-hueco h-100">
+                        {% if mascota.foto_principal %}
+                            <img src="{{ mascota.foto_principal.url }}" class="card-img-top" alt="{{ mascota.nombre }}" style="height: 220px; object-fit: cover;">
+                        {% else %}
+                            <div class="d-flex justify-content-center align-items-center bg-light" style="height: 220px;">
+                                <i class="bi bi-paw display-1 text-muted"></i>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="card-title mb-1">{{ mascota.nombre }}</h5>
+                                <span class="badge bg-success">{{ mascota.get_especie_display }}</span>
+                            </div>
+                            <p class="text-muted small mb-2">
+                                <i class="bi bi-gender-ambiguous me-1"></i>{{ mascota.get_sexo_display }}
+                                <span class="mx-1">·</span>{{ mascota.get_edad_display }}
+                                <span class="mx-1">·</span>{{ mascota.get_tamano_display }}
+                                {% if mascota.ciudad %}<br><i class="bi bi-geo-alt me-1"></i>{{ mascota.ciudad }}{% endif %}
+                            </p>
+                            <p class="card-text small text-muted">{{ mascota.descripcion|truncatewords:20 }}</p>
+                            <div class="d-grid">
+                                <a href="{% url 'mascotas:detalle_mascota' mascota.id %}" class="btn btn-verde btn-sm">Ver detalle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-paw display-1 text-muted"></i>
+            <p class="text-muted mt-3">No hay mascotas en adopción que coincidan con tu búsqueda.</p>
+            <a href="{% url 'mascotas:listado_mascotas' %}" class="btn btn-ambar">Ver todas</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

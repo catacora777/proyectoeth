@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ titulo }} - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card tarjeta-hueco">
+                <div class="card-body p-4">
+                    <h3 class="mb-4"><i class="bi bi-paw me-2" style="color: #40916c;"></i>{{ titulo }}</h3>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for campo in formulario %}
+                            <div class="mb-3">
+                                <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+                                {{ campo }}
+                                {% if campo.help_text %}<div class="form-text">{{ campo.help_text }}</div>{% endif %}
+                                {% for error in campo.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                            </div>
+                        {% endfor %}
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-verde"><i class="bi bi-check-circle me-1"></i>Guardar</button>
+                            <a href="{% url 'mascotas:listado_mascotas' %}" class="btn btn-ambar">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

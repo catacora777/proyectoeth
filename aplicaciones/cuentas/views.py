@@ -29,7 +29,9 @@ def editar_perfil(request):
 def perfil_publico(request, username):
     usuario = get_object_or_404(User, username=username)
     perfil = usuario.perfil
+    mascotas = usuario.mascotas.filter(estado='en_adopcion')
     return render(request, 'aplicaciones/cuentas/perfil_publico.html', {
         'perfil': perfil,
         'usuario_visible': usuario,
+        'mascotas': mascotas,
     })

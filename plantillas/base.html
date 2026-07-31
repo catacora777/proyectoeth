@@ -35,9 +35,9 @@
             </button>
             <div class="collapse navbar-collapse" id="barraNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                    <li class="nav-item"><a class="nav-link" href="#rescate"><i class="bi bi-search me-1"></i>Rescate</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#perdidos"><i class="bi bi-geo-alt me-1"></i>Perdidos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#adopcion"><i class="bi bi-heart me-1"></i>Adoptar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'mascotas:listado_mascotas' %}"><i class="bi bi-heart me-1"></i>Adoptar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'mascotas:listado_perdidos' %}"><i class="bi bi-geo-alt me-1"></i>Perdidos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'mascotas:listado_rescatados' %}"><i class="bi bi-search me-1"></i>Rescatados</a></li>
                     <li class="nav-item"><a class="nav-link" href="#servicios"><i class="bi bi-scissors me-1"></i>Servicios</a></li>
                     <li class="nav-item"><a class="nav-link" href="#comunidad"><i class="bi bi-people me-1"></i>Comunidad</a></li>
                     {% if user.is_authenticated %}
@@ -47,6 +47,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{% url 'cuentas:mi_perfil' %}"><i class="bi bi-person me-1"></i>Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="{% url 'mascotas:mis_mascotas' %}"><i class="bi bi-paw me-1"></i>Mis mascotas</a></li>
                                 <li><a class="dropdown-item" href="{% url 'account_email' %}">Mi cuenta</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'account_logout' %}">Cerrar sesión</a></li>
@@ -62,6 +63,16 @@
     </nav>
 
     <main class="pt-4">
+        {% if messages %}
+            <div class="container mt-3">
+                {% for mensaje in messages %}
+                    <div class="alert alert-{{ mensaje.tags }} alert-dismissible fade show" role="alert">
+                        {{ mensaje }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block contenido %}{% endblock %}
     </main>
 

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block titulo %}Animales rescatados - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="bi bi-bandaid me-2" style="color: #40916c;"></i>Animales rescatados</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'mascotas:reportar_rescate' %}" class="btn btn-verde"><i class="bi bi-plus-circle me-1"></i>Reportar rescate</a>
+        {% endif %}
+    </div>
+
+    <div class="row g-4">
+        {% for rescatado in rescatados %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card tarjeta-hueco h-100">
+                    {% if rescatado.foto %}
+                        <img src="{{ rescatado.foto.url }}" class="card-img-top" alt="{{ rescatado.get_especie_display }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="d-flex justify-content-center align-items-center bg-light" style="height: 200px;">
+                            <i class="bi bi-paw display-1 text-muted"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="badge bg-success mb-2">{{ rescatado.get_especie_display }} rescatado</span>
+                        {% if rescatado.color %}<p class="small mb-1"><i class="bi bi-palette me-1"></i>{{ rescatado.color }}</p>{% endif %}
+                        <p class="small mb-1"><i class="bi bi-geo-alt me-1"></i>{{ rescatado.ubicacion }}</p>
+                        <p class="small text-muted mb-2">{{ rescatado.descripcion|truncatewords:20 }}</p>
+                        <p class="small text-muted mb-0">Rescatado el {{ rescatado.fecha_rescate|date:"d/m/Y" }} por
+                            <a href="{% url 'cuentas:perfil_publico' rescatado.usuario.username %}">{{ rescatado.usuario.username }}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-patch-check display-1 text-muted"></i>
+                    <p class="text-muted mt-3">No hay animales rescatados reportados.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

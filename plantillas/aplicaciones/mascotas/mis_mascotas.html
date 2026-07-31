@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block titulo %}Mis mascotas - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="bi bi-paw me-2" style="color: #40916c;"></i>Mis mascotas</h2>
+        <a href="{% url 'mascotas:registrar_mascota' %}" class="btn btn-verde"><i class="bi bi-plus-circle me-1"></i>Registrar mascota</a>
+    </div>
+
+    {% if mascotas %}
+        <div class="table-responsive">
+            <table class="table table-hover tarjeta-hueco bg-white">
+                <thead>
+                    <tr>
+                        <th>Mascota</th>
+                        <th>Especie</th>
+                        <th>Estado</th>
+                        <th>Ciudad</th>
+                        <th>Solicitudes</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mascota in mascotas %}
+                        <tr>
+                            <td><strong>{{ mascota.nombre }}</strong></td>
+                            <td>{{ mascota.get_especie_display }}</td>
+                            <td><span class="badge bg-success">{{ mascota.get_estado_display }}</span></td>
+                            <td>{{ mascota.ciudad|default:'—' }}</td>
+                            <td>
+                                {% if mascota.solicitudes.count %}
+                                    <span class="badge bg-warning text-dark">{{ mascota.solicitudes.count }}</span>
+                                {% else %}
+                                    <span class="text-muted">0</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'mascotas:detalle_mascota' mascota.id %}" class="btn btn-verde btn-sm"><i class="bi bi-eye"></i></a>
+                                <a href="{% url 'mascotas:editar_mascota' mascota.id %}" class="btn btn-ambar btn-sm"><i class="bi bi-pencil"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-paw display-1 text-muted"></i>
+            <p class="text-muted mt-3">Aún no registraste ninguna mascota.</p>
+            <a href="{% url 'mascotas:registrar_mascota' %}" class="btn btn-verde">Registrar tu primera mascota</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

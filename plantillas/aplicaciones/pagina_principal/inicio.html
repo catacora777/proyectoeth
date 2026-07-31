@@ -12,8 +12,8 @@
                 <h1 class="display-5 fw-bold">Dales una segunda oportunidad a los que no tienen voz</h1>
                 <p class="lead">Somos una comunidad dedicada al rescate, la adopción responsable y el bienestar de las mascotas. Juntos evitamos que vuelvan a las calles o sean víctimas del maltrato.</p>
                 <div class="d-flex flex-wrap gap-2 mt-4">
-                    <a href="#adopcion" class="btn btn-ambar btn-lg"><i class="bi bi-heart me-2"></i>Quiero adoptar</a>
-                    <a href="#rescate" class="btn btn-verde btn-lg"><i class="bi bi-search me-2"></i>Reportar un rescate</a>
+                    <a href="{% url 'mascotas:listado_mascotas' %}" class="btn btn-ambar btn-lg"><i class="bi bi-heart me-2"></i>Quiero adoptar</a>
+                    <a href="{% url 'mascotas:listado_rescatados' %}" class="btn btn-verde btn-lg"><i class="bi bi-search me-2"></i>Reportar un rescate</a>
                 </div>
             </div>
             <div class="col-lg-5 text-center mt-4 mt-lg-0">
@@ -34,7 +34,7 @@
                         <i class="bi bi-geo-alt-fill fs-1" style="color: #40916c;"></i>
                         <h5 class="card-title mt-3">Reportar mascota perdida</h5>
                         <p class="card-text text-muted">Publica la ubicación y los datos de tu mascota para que la comunidad te ayude a encontrarla.</p>
-                        <a href="#" class="btn btn-verde">Reportar</a>
+                        <a href="{% url 'mascotas:reportar_perdida' %}" class="btn btn-verde">Reportar</a>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                         <i class="bi bi-house-heart-fill fs-1" style="color: #40916c;"></i>
                         <h5 class="card-title mt-3">Reportar animal en la calle</h5>
                         <p class="card-text text-muted">Encontraste un animal en situación de calle? Reportalo para que podamos rescatarlo.</p>
-                        <a href="#" class="btn btn-verde">Reportar</a>
+                        <a href="{% url 'mascotas:reportar_rescate' %}" class="btn btn-verde">Reportar</a>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                         <i class="bi bi-map-fill fs-1" style="color: #40916c;"></i>
                         <h5 class="card-title mt-3">Mapa de rescates</h5>
                         <p class="card-text text-muted">Consulta los reportes cercanos a tu zona y encuentra a una mascota perdida o rescatada.</p>
-                        <a href="#" class="btn btn-verde">Ver mapa</a>
+                        <a href="{% url 'mascotas:listado_perdidos' %}" class="btn btn-verde">Ver mapa</a>
                     </div>
                 </div>
             </div>
@@ -67,33 +67,22 @@
         <h2 class="fw-bold text-center mb-2">Mascotas Perdidas</h2>
         <p class="text-center text-muted mb-4">Si reconoces alguna de estas mascotas, contacta con su familia.</p>
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card tarjeta-hueco">
-                    <div class="card-body">
-                        <h5 class="card-title">Luna</h5>
-                        <p class="card-text small text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>Zona Central</p>
-                        <p class="card-text small mb-0">Perra, 2 años, color blanca con manchas grises. Respondió al nombre.</p>
+            {% for perdido in perdidos_recientes %}
+                <div class="col-md-4">
+                    <div class="card tarjeta-hueco h-100">
+                        {% if perdido.foto %}
+                            <img src="{{ perdido.foto.url }}" class="card-img-top" alt="{{ perdido.nombre }}" style="height: 180px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ perdido.nombre }}</h5>
+                            <p class="card-text small text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>{{ perdido.ultima_ubicacion }}</p>
+                            <p class="card-text small mb-0">{{ perdido.descripcion|default:'Sin descripción' }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card tarjeta-hueco">
-                    <div class="card-body">
-                        <h5 class="card-title">Rocky</h5>
-                        <p class="card-text small text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>Zona Sur</p>
-                        <p class="card-text small mb-0">Perro, 3 años, color marrón. Collar rojo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card tarjeta-hueco">
-                    <div class="card-body">
-                        <h5 class="card-title">Mishi</h5>
-                        <p class="card-text small text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>Zona Norte</p>
-                        <p class="card-text small mb-0">Gata, 1 año, color naranja, muy dócil.</p>
-                    </div>
-                </div>
-            </div>
+            {% empty %}
+                <div class="col-12 text-center text-muted">Aún no hay mascotas perdidas reportadas.</div>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -123,7 +112,7 @@
                         <i class="bi bi-shield-fill-check fs-1" style="color: #40916c;"></i>
                         <h5 class="card-title mt-2">Compromiso de por vida</h5>
                         <p class="card-text text-muted">Firmamos un compromiso legal que protege al animal contra el abandono, el maltrato y la venta ilícita.</p>
-                        <a href="#" class="btn btn-ambar">Ver mascotas en adopción</a>
+                        <a href="{% url 'mascotas:listado_mascotas' %}" class="btn btn-ambar">Ver mascotas en adopción</a>
                     </div>
                 </div>
             </div>
