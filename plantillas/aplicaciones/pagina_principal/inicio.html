@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Huellitas - Rescate y Adopción de Mascotas{% endblock %}
+
+{% block contenido %}
+
+<section class="hero py-5">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge badge-verde mb-3">ONG sin fines de lucro</span>
+                <h1 class="display-5 fw-bold">Dales una segunda oportunidad a los que no tienen voz</h1>
+                <p class="lead">Somos una comunidad dedicada al rescate, la adopción responsable y el bienestar de las mascotas. Juntos evitamos que vuelvan a las calles o sean víctimas del maltrato.</p>
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                    <a href="#adopcion" class="btn btn-ambar btn-lg"><i class="bi bi-heart me-2"></i>Quiero adoptar</a>
+                    <a href="#rescate" class="btn btn-verde btn-lg"><i class="bi bi-search me-2"></i>Reportar un rescate</a>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center mt-4 mt-lg-0">
+                <i class="bi bi-shield-heart" style="font-size: 10rem; color: #e9c46a;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="rescate" class="py-5">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-2">Rescate de Mascotas</h2>
+        <p class="text-center text-muted mb-4">Ayúdanos a encontrar un hogar o reunirlos con sus familias.</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-geo-alt-fill fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Reportar mascota perdida</h5>
+                        <p class="card-text text-muted">Publica la ubicación y los datos de tu mascota para que la comunidad te ayude a encontrarla.</p>
+                        <a href="#" class="btn btn-verde">Reportar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-house-heart-fill fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Reportar animal en la calle</h5>
+                        <p class="card-text text-muted">Encontraste un animal en situación de calle? Reportalo para que podamos rescatarlo.</p>
+                        <a href="#" class="btn btn-verde">Reportar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-map-fill fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Mapa de rescates</h5>
+                        <p class="card-text text-muted">Consulta los reportes cercanos a tu zona y encuentra a una mascota perdida o rescatada.</p>
+                        <a href="#" class="btn btn-verde">Ver mapa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="perdidos" class="py-5" style="background-color: #e8f5ee;">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-2">Mascotas Perdidas</h2>
+        <p class="text-center text-muted mb-4">Si reconoces alguna de estas mascotas, contacta con su familia.</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco">
+                    <div class="card-body">
+                        <h5 class="card-title">Luna</h5>
+                        <p class="card-text small text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>Zona Central</p>
+                        <p class="card-text small mb-0">Perra, 2 años, color blanca con manchas grises. Respondió al nombre.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco">
+                    <div class="card-body">
+                        <h5 class="card-title">Rocky</h5>
+                        <p class="card-text small text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>Zona Sur</p>
+                        <p class="card-text small mb-0">Perro, 3 años, color marrón. Collar rojo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco">
+                    <div class="card-body">
+                        <h5 class="card-title">Mishi</h5>
+                        <p class="card-text small text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>Zona Norte</p>
+                        <p class="card-text small mb-0">Gata, 1 año, color naranja, muy dócil.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="adopcion" class="py-5">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-2">Adopción Responsable</h2>
+        <p class="text-center text-muted mb-4">Cada adopción incluye un compromiso firmado y seguimiento para garantizar un hogar seguro.</p>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title"><i class="bi bi-clipboard-check me-2" style="color: #40916c;"></i>Proceso de adopción</h5>
+                        <ol class="mb-0">
+                            <li>Elige a tu nueva mascota</li>
+                            <li>Completa la solicitud de adopción</li>
+                            <li>Coordinamos una cita con el rescatista</li>
+                            <li>Firmas el compromiso de adopción en nuestra sede</li>
+                            <li>Recibimos seguimiento periódico del bienestar del animal</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body p-4 text-center">
+                        <i class="bi bi-shield-fill-check fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-2">Compromiso de por vida</h5>
+                        <p class="card-text text-muted">Firmamos un compromiso legal que protege al animal contra el abandono, el maltrato y la venta ilícita.</p>
+                        <a href="#" class="btn btn-ambar">Ver mascotas en adopción</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="servicios" class="py-5" style="background-color: #e8f5ee;">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-2">Centro de Servicios</h2>
+        <p class="text-center text-muted mb-4">Los ingresos de nuestros servicios financian el hogar de los rescatados.</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-eyedropper fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Veterinaria</h5>
+                        <p class="card-text text-muted">Consultas, vacunas, esterilización y atención médica completa.</p>
+                        <a href="#" class="btn btn-verde">Agendar cita</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-scissors fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Peluquería</h5>
+                        <p class="card-text text-muted">Baño, corte, cepillado y cuidado estético para tu mascota.</p>
+                        <a href="#" class="btn btn-verde">Agendar cita</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-house-door fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Guardería</h5>
+                        <p class="card-text text-muted">Cuidado temporal mientras trabajas o viajas, con atención las 24 horas.</p>
+                        <a href="#" class="btn btn-verde">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="comunidad" class="py-5">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-2">Únete a la Comunidad</h2>
+        <p class="text-center text-muted mb-4">Tu apoyo hace posible esta causa justa.</p>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-cash-coin fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Donar</h5>
+                        <p class="card-text text-muted">Toda donación se destina a alimento, medicinas y el hogar de los rescatados.</p>
+                        <a href="#" class="btn btn-verde">Donar ahora</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-person-hearts fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Voluntariado</h5>
+                        <p class="card-text text-muted">Sumate como voluntario en jornadas de rescate, adopción y cuidado.</p>
+                        <a href="#" class="btn btn-verde">Quiero ser voluntario</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card tarjeta-hueco h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-megaphone fs-1" style="color: #40916c;"></i>
+                        <h5 class="card-title mt-3">Sé parte</h5>
+                        <p class="card-text text-muted">Regístrate y participa de la comunidad que protege a los animales.</p>
+                        <a href="{% url 'account_signup' %}" class="btn btn-ambar">Registrarme</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
