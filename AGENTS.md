@@ -135,6 +135,10 @@ python manage.py shell                           # Consola interactiva
 - **ReporteRescatado**: `especie`, `color`, `descripcion`, `foto`, `ciudad`, `ubicacion`, `fecha_rescate`, `estado` (rescatado/en_hogar), `usuario`, `fecha_registro`.
 - **SolicitudAdopcion**: `usuario` (solicitante), `mascota`, `mensaje`, `experiencia`, `estado` (pendiente/aprobada/rechazada), `fecha_solicitud`. Protege contra solicitudes del dueño o mascotas no disponibles.
 
+### App `servicios`
+- **Servicio**: `tipo` (veterinaria/peluqueria/guarderia), `nombre`, `descripcion`, `precio` (Bs), `duracion_minutos`, `foto`, `activo`, `fecha_registro`.
+- **Cita**: `usuario`, `servicio` (FK), `mascota` (FK opcional), `fecha`, `hora`, `notas`, `estado` (pendiente/confirmada/completada/cancelada), `fecha_registro`. Valida citas duplicadas (mismo usuario+servicio+fecha+hora activa).
+
 ## Rutas existentes
 
 | URL | Vista | Descripción |
@@ -156,6 +160,11 @@ python manage.py shell                           # Consola interactiva
 | `/mascotas/<id>/editar/` | `mascotas:editar_mascota` | Editar mascota (dueño) |
 | `/mascotas/<id>/eliminar/` | `mascotas:eliminar_mascota` | Eliminar mascota (dueño) |
 | `/mascotas/<id>/solicitar-adopcion/` | `mascotas:solicitar_adopcion` | Solicitud formal de adopción (login) |
+| `/servicios/` | `servicios:listado_servicios` | Catálogo de servicios activos |
+| `/servicios/mis-citas/` | `servicios:mis_citas` | Mis citas (login) |
+| `/servicios/<id>/` | `servicios:detalle_servicio` | Detalle de servicio |
+| `/servicios/<id>/agendar/` | `servicios:agendar_cita` | Agendar cita (login) |
+| `/servicios/citas/<id>/cancelar/` | `servicios:cancelar_cita` | Cancelar cita (login) |
 
 ## Mapa de fases (roadmap)
 
@@ -164,7 +173,7 @@ python manage.py shell                           # Consola interactiva
 | 1 | Configuración | Proyecto, PostgreSQL, Jazzmin, Allauth, estructura | ✅ Completada |
 | 2 | cuentas | Perfil de usuario, edición, perfil público | ✅ Completada |
 | 3 | mascotas | Mascota, FotoMascota, ReportePerdido, ReporteRescatado, SolicitudAdopcion, CRUD, filtros, galería | ✅ Completada |
-| 4 | servicios | Servicio, Cita (veterinaria, peluquería, guardería) | ⬜ Pendiente |
+| 4 | servicios | Servicio, Cita (veterinaria, peluquería, guardería) | ✅ Completada |
 | 5 | seguimiento | Seguimiento post-adopción, Visita, ListaVerificacion, alertas | ⬜ Pendiente |
 | 6 | chat | Django Channels + Redis (WebSockets) | ⬜ Pendiente |
 | 7 | pagos | Stripe Checkout, donaciones | ⬜ Pendiente |

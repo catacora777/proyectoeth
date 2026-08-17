@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ servicio.nombre }} - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'pagina_principal:inicio' %}">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'servicios:listado_servicios' %}">Servicios</a></li>
+            <li class="breadcrumb-item active">{{ servicio.nombre }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card tarjeta-hueco">
+                {% if servicio.foto %}
+                    <img src="{{ servicio.foto.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
+                {% else %}
+                    <div class="d-flex justify-content-center align-items-center bg-light p-5">
+                        <i class="bi bi-paw display-1 text-muted"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card tarjeta-hueco">
+                <div class="card-body p-4">
+                    <span class="badge bg-success mb-2">{{ servicio.get_tipo_display }}</span>
+                    <h2 class="mb-1">{{ servicio.nombre }}</h2>
+                    <div class="d-flex align-items-center gap-3 my-3">
+                        <span class="fw-bold fs-4" style="color: #2d6a4f;">Bs {{ servicio.precio }}</span>
+                        <span class="small text-muted"><i class="bi bi-clock me-1"></i>{{ servicio.duracion_minutos }} minutos</span>
+                    </div>
+                    <h5>Descripción</h5>
+                    <p class="text-muted">{{ servicio.descripcion|linebreaks }}</p>
+                    <div class="d-grid mt-4">
+                        <a href="{% url 'servicios:agendar_cita' servicio.id %}" class="btn btn-verde btn-lg"><i class="bi bi-calendar-plus me-1"></i>Agendar cita</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

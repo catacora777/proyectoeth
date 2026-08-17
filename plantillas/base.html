@@ -38,7 +38,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'mascotas:listado_mascotas' %}"><i class="bi bi-heart me-1"></i>Adoptar</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'mascotas:listado_perdidos' %}"><i class="bi bi-geo-alt me-1"></i>Perdidos</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'mascotas:listado_rescatados' %}"><i class="bi bi-search me-1"></i>Rescatados</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#servicios"><i class="bi bi-scissors me-1"></i>Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'servicios:listado_servicios' %}"><i class="bi bi-scissors me-1"></i>Servicios</a></li>
                     <li class="nav-item"><a class="nav-link" href="#comunidad"><i class="bi bi-people me-1"></i>Comunidad</a></li>
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
@@ -48,6 +48,10 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{% url 'cuentas:mi_perfil' %}"><i class="bi bi-person me-1"></i>Mi perfil</a></li>
                                 <li><a class="dropdown-item" href="{% url 'mascotas:mis_mascotas' %}"><i class="bi bi-paw me-1"></i>Mis mascotas</a></li>
+                                <li><a class="dropdown-item" href="{% url 'servicios:mis_citas' %}"><i class="bi bi-calendar-check me-1"></i>Mis citas</a></li>
+                                {% if user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="bi bi-gear me-1"></i>Administración</a></li>
+                                {% endif %}
                                 <li><a class="dropdown-item" href="{% url 'account_email' %}">Mi cuenta</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'account_logout' %}">Cerrar sesión</a></li>

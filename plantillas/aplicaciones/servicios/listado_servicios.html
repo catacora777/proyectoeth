@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block titulo %}Centro de Servicios - Huellitas{% endblock %}
+
+{% block contenido %}
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold"><i class="bi bi-scissors me-2" style="color: #40916c;"></i>Centro de Servicios</h2>
+        <p class="text-muted">Los ingresos de nuestros servicios financian el hogar de los rescatados.</p>
+    </div>
+
+    {% regroup servicios by get_tipo_display as grupos %}
+    {% for grupo in grupos %}
+        <h4 class="mt-4 mb-3">
+            <span class="badge bg-success">{{ grupo.grouper }}</span>
+        </h4>
+        <div class="row g-4">
+            {% for servicio in grupo.list %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card tarjeta-hueco h-100">
+                        {% if servicio.foto %}
+                            <img src="{{ servicio.foto.url }}" class="card-img-top" alt="{{ servicio.nombre }}" style="height: 180px; object-fit: cover;">
+                        {% else %}
+                            <div class="d-flex justify-content-center align-items-center bg-light" style="height: 180px;">
+                                <i class="bi bi-paw display-1 text-muted"></i>
+                            </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ servicio.nombre }}</h5>
+                            <p class="card-text small text-muted flex-grow-1">{{ servicio.descripcion|truncatewords:20 }}</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="fw-bold" style="color: #2d6a4f;">Bs {{ servicio.precio }}</span>
+                                <span class="small text-muted"><i class="bi bi-clock me-1"></i>{{ servicio.duracion_minutos }} min</span>
+                            </div>
+                            <div class="d-grid">
+                                <a href="{% url 'servicios:detalle_servicio' servicio.id %}" class="btn btn-verde btn-sm">Ver detalle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% empty %}
+        <div class="text-center py-5">
+            <i class="bi bi-patch-check display-1 text-muted"></i>
+            <p class="text-muted mt-3">No hay servicios disponibles por el momento.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
