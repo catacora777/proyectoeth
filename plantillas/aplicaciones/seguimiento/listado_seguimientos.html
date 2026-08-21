@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block titulo %}Seguimientos - Huellitas{% endblock %}
+{% block contenido %}
+<div class="container py-4">
+    <h3><i class="bi bi-clipboard-check me-2" style="color: #40916c;"></i>Seguimientos post-adopción</h3>
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-md-3"><input type="text" name="q" value="{{ busqueda|default:'' }}" class="form-control" placeholder="Buscar adoptante o mascota"></div>
+        <div class="col-md-2">
+            <select name="estado" class="form-select"><option value="">Todos</option><option value="activo" {% if estado == 'activo' %}selected{% endif %}>Activo</option><option value="finalizado" {% if estado == 'finalizado' %}selected{% endif %}>Finalizado</option><option value="alertado" {% if estado == 'alertado' %}selected{% endif %}>Alertado</option></select>
+        </div>
+        <div class="col-md-2"><button class="btn btn-verde">Filtrar</button></div>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-hover tarjeta-hueco bg-white">
+            <thead><tr><th>Mascota</th><th>Adoptante</th><th>Estado</th><th>Inicio</th><th></th></tr></thead>
+            <tbody>
+            {% for s in seguimientos %}
+                <tr><td>{{ s.mascota.nombre }}</td><td>{{ s.adoptante.username }}</td><td><span class="badge bg-success">{{ s.get_estado_display }}</span></td><td>{{ s.fecha_inicio|date:"d/m/Y" }}</td><td><a href="{% url 'seguimiento:detalle_seguimiento' s.id %}" class="btn btn-verde btn-sm">Ver</a></td></tr>
+            {% empty %}<tr><td colspan="5" class="text-center text-muted">Sin seguimientos.</td></tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

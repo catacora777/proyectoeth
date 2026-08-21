@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block titulo %}Alertas - Huellitas{% endblock %}
+{% block contenido %}
+<div class="container py-4">
+    <h3><i class="bi bi-bell me-2" style="color: #e76f51;"></i>Alertas</h3>
+    <div class="table-responsive">
+        <table class="table tarjeta-hueco bg-white">
+            <thead><tr><th>Mascota</th><th>Tipo</th><th>Prioridad</th><th>Mensaje</th><th></th></tr></thead>
+            <tbody>
+            {% for a in alertas %}
+                <tr><td>{{ a.seguimiento.mascota.nombre }}</td><td>{{ a.get_tipo_display }}</td><td><span class="badge bg-warning text-dark">{{ a.get_prioridad_display }}</span></td><td>{{ a.mensaje|truncatewords:15 }}</td><td><form method="post" action="{% url 'seguimiento:marcar_alerta_leida' a.id %}">{% csrf_token %}<button class="btn btn-verde btn-sm">Marcar leída</button></form></td></tr>
+            {% empty %}<tr><td colspan="5" class="text-center text-muted">Sin alertas pendientes.</td></tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

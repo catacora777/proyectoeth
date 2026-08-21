@@ -159,7 +159,13 @@ python manage.py shell                           # Consola interactiva
 | `/mascotas/<id>/` | `mascotas:detalle_mascota` | Detalle de mascota |
 | `/mascotas/<id>/editar/` | `mascotas:editar_mascota` | Editar mascota (dueño) |
 | `/mascotas/<id>/eliminar/` | `mascotas:eliminar_mascota` | Eliminar mascota (dueño) |
-| `/mascotas/<id>/solicitar-adopcion/` | `mascotas:solicitar_adopcion` | Solicitud formal de adopción (login) |
+| `/seguimientos/` | `seguimiento:listado_seguimientos` | Listado de seguimientos |
+| `/seguimientos/<id>/` | `seguimiento:detalle_seguimiento` | Detalle de seguimiento |
+| `/seguimientos/<id>/visita/nueva/` | `seguimiento:crear_visita` | Programar visita (voluntario/admin) |
+| `/seguimientos/mis-alertas/` | `seguimiento:mis_alertas` | Mis alertas (voluntario) |
+| `/seguimientos/alertas/<id>/leer/` | `seguimiento:marcar_alerta_leida` | Marcar alerta como leída |
+| `/seguimientos/publico/` | `seguimiento:listado_seguimientos_publico` | Versión pública del listado |
+| `/servicios/<id>/seguimientos/` | `seguimiento:listado_seguimientos` | Ver seguimientos de un servicio (solo admin) |
 | `/servicios/` | `servicios:listado_servicios` | Catálogo de servicios activos |
 | `/servicios/mis-citas/` | `servicios:mis_citas` | Mis citas (login) |
 | `/servicios/<id>/` | `servicios:detalle_servicio` | Detalle de servicio |
@@ -174,7 +180,7 @@ python manage.py shell                           # Consola interactiva
 | 2 | cuentas | Perfil de usuario, edición, perfil público | ✅ Completada |
 | 3 | mascotas | Mascota, FotoMascota, ReportePerdido, ReporteRescatado, SolicitudAdopcion, CRUD, filtros, galería | ✅ Completada |
 | 4 | servicios | Servicio, Cita (veterinaria, peluquería, guardería) | ✅ Completada |
-| 5 | seguimiento | Seguimiento post-adopción, Visita, ListaVerificacion, alertas | ⬜ Pendiente |
+| 5 | seguimiento | Seguimiento post-adopción, Visita, ListaVerificacion, alertas | ✅ Completada |
 | 6 | chat | Django Channels + Redis (WebSockets) | ⬜ Pendiente |
 | 7 | pagos | Stripe Checkout, donaciones | ⬜ Pendiente |
 | 8 | comunidad | Membresías, eventos, campañas | ⬜ Pendiente |

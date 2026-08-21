@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block titulo %}Programar visita - Huellitas{% endblock %}
+{% block contenido %}
+<div class="container py-4">
+    <div class="row justify-content-center"><div class="col-lg-6">
+        <div class="card tarjeta-hueco"><div class="card-body p-4">
+            <h4>Programar visita para {{ seguimiento.mascota.nombre }}</h4>
+            <form method="post">{% csrf_token %}
+                {% for campo in formulario %}<div class="mb-3"><label class="form-label">{{ campo.label }}</label>{{ campo }}{% for e in campo.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}</div>{% endfor %}
+                <button class="btn btn-verde">Guardar</button>
+                <a href="{% url 'seguimiento:detalle_seguimiento' seguimiento.id %}" class="btn btn-ambar">Cancelar</a>
+            </form>
+        </div></div>
+    </div></div>
+</div>
+{% endblock %}

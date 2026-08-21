@@ -26,6 +26,7 @@ urlpatterns = [
     path('cuenta/', include('aplicaciones.cuentas.urls')),
     path('mascotas/', include('aplicaciones.mascotas.urls')),
     path('servicios/', include('aplicaciones.servicios.urls')),
+    path('seguimientos/', include('aplicaciones.seguimiento.urls')),
 ]
 
 if settings.DEBUG:

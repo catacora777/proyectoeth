@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block titulo %}Detalle seguimiento - Huellitas{% endblock %}
+{% block contenido %}
+<div class="container py-4">
+    <h3>Seguimiento: {{ seguimiento.mascota.nombre }} - {{ seguimiento.adoptante.username }}</h3>
+    <p><span class="badge bg-success">{{ seguimiento.get_estado_display }}</span> desde {{ seguimiento.fecha_inicio|date:"d/m/Y" }}</p>
+    <a href="{% url 'seguimiento:crear_visita' seguimiento.id %}" class="btn btn-verde mb-3"><i class="bi bi-plus-circle me-1"></i>Programar visita</a>
+    <h5>Visitas</h5>
+    <div class="table-responsive">
+        <table class="table tarjeta-hueco bg-white">
+            <thead><tr><th>Tipo</th><th>Programada</th><th>Estado</th><th>Responsable</th><th></th></tr></thead>
+            <tbody>
+            {% for v in visitas %}
+                <tr><td>{{ v.get_tipo_display }}</td><td>{{ v.fecha_programada|date:"d/m/Y H:i" }}</td><td>{{ v.get_estado_display }}</td><td>{{ v.responsable.username|default:"—" }}</td><td><a href="{% url 'seguimiento:realizar_visita' v.id %}" class="btn btn-ambar btn-sm">Checklist</a></td></tr>
+            {% empty %}<tr><td colspan="5" class="text-center text-muted">Sin visitas programadas.</td></tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if alertas %}<div class="alert alert-warning mt-3">{% for a in alertas %}<div>{{ a.get_tipo_display }}: {{ a.mensaje }}</div>{% endfor %}</div>{% endif %}
+</div>
+{% endblock %}
